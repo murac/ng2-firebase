@@ -6,8 +6,12 @@ import {Component, Output, EventEmitter, Input} from '@angular/core';
 })
 export class BookmarkEditComponent {
     @Input() bookmark = {};
+    @Output() clear = new EventEmitter();
     @Output() save = new EventEmitter();
     onSave(){
         this.save.emit(this.bookmark);
+    }
+    onClear(){
+        this.clear.emit(null);
     }
 }

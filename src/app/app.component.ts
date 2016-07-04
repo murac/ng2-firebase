@@ -6,34 +6,43 @@ import {BookmarkEditComponent} from "./bookmarkedit.component";
 
 @Component({
     selector: 'bookmark-app',
-    directives:[BookmarkListComponent, BookmarkEditComponent],
+    directives: [BookmarkListComponent, BookmarkEditComponent],
     providers: [HTTP_PROVIDERS, BookmarkService],
     template: require('./app.component.html')
 })
 export class AppComponent {
     bookmarks = [];
-    editableBookmark={};
+    editableBookmark = {};
+
     constructor(private _bookmarkService:BookmarkService) {
+        this._bookmarkService.errorHandler = error => window.alert('BookmarkService Error: ');
         this.reload();
     }
-    save(bookmark){
-        if(!bookmark.id){
+
+    save(bookmark) {
+        if (!bookmark.id) {
             this._bookmarkService.addBookmark(bookmark).then(()=>this.reload());
-        }else {
+        } else {
             this._bookmarkService.updateBookmark(bookmark).then(()=>this.reload());
         }
+        this.clear();
 
     }
 
-    private reload(){
-        return this._bookmarkService.getBookmarks().then(bookmarks=>this.bookmarks=bookmarks);
+    clear() {
+        this.editableBookmark = {};
     }
 
-    remove(bookmark){
+    private reload() {
+        return this._bookmarkService.getBookmarks().then(bookmarks=>this.bookmarks = bookmarks);
+    }
+
+    remove(bookmark) {
+        console.log(bookmark);
         this._bookmarkService.removeBookmark(bookmark).then(()=>this.reload());
     }
 
-    edit(bookmark){
-        this.editableBookmark=Object.assign({},bookmark);
+    edit(bookmark) {
+        this.editableBookmark = Object.assign({}, bookmark);
     }
 }

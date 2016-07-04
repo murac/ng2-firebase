@@ -2,9 +2,16 @@
     <table class="table table-striped">
         <tr *ngFor="let bookmark of bookmarks">
             <td><a [href]="bookmark.url" target="_blank">{{bookmark.title}}</a></td>
+            <td class="hidden-xs hidden-sm">{{bookmark.url}}</td>
             <td>
-                <button (click)="onEdit(bookmark)" class="btn btn-primary">Edit</button>
-                <button (click)="onRemove(bookmark)" class="btn btn-danger">Delete</button>
+                <button (click)="onEdit(bookmark)" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span class="hidden-xs">Edit</span>
+                </button>
+                <button (click)="onRemove(bookmark)" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    <span class="hidden-xs">Delete</span>
+                </button>
             </td>
         </tr>
     </table>
